@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from "@nestjs/swagger";
 import { SeriesService } from './series.service';
 import { Observable } from 'rxjs';
@@ -25,8 +25,8 @@ export class SeriesController {
         return this._seriesService.create(createSerieDto)
     }
 
-    @Put()
-    create(@Body() updateSerieDto: UpdateSerieDto): Observable<SerieEntity | void> {
-        return this._seriesService.update(updateSerieDto)
+    @Delete(':id')
+    delete(@Param('id') id: number): Observable<void> {
+        return this._seriesService.delete(id)
     }
 }

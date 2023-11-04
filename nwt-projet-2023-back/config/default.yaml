@@ -1,0 +1,8 @@
+swagger:
+  title: Series And Movies
+  description: The Series and Movies API desciption
+  version: 1.0
+  tag: series, movies
+  path: documentation
+mongodb:
+  uri: mongodb+srv://backend:BCsQmM7TQyjJ89h5@cluster0.2bxqbdi.mongodb.net/?retryWrites=true&w=majority
