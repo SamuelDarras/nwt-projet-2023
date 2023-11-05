@@ -2,7 +2,7 @@ import { Observable, catchError, defaultIfEmpty, filter, map, mergeMap, of, thro
 import { SerieEntity } from './entities/serie.entity';
 import { CreateSerieDto } from './dtos/create-serie.dto';
 import { UpdateSerieDto } from './dtos/update-serie.dto';
-import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import { SerieDao } from './daos/serie.dao';
 
 @Injectable()
@@ -34,15 +34,66 @@ export class SeriesService {
         )
     }
 
-    create(createSerieDto: CreateSerieDto): Observable<SerieEntity | void> {
-        throw new Error('Method not implemented.');
+    create(serie: CreateSerieDto): Observable<SerieEntity> {
+        return this._prepareNewSerie(serie).pipe(
+            mergeMap((newPreparedSerie: CreateSerieDto) =>
+              this._serieDao.save(newPreparedSerie),
+            ),
+            catchError((e) =>
+              e.code === 11000
+                ? throwError(
+                    () =>
+                      new ConflictException(
+                        `Serie with title '${serie.title}' already exists`,
+                      ),
+                  )
+                : throwError(() => new UnprocessableEntityException(e.message)),
+            ),
+            map((serieCreated) => new SerieEntity(serieCreated)),
+          );
     }
 
-    update(updateSerieDto: UpdateSerieDto): Observable<void | SerieEntity> {
-        throw new Error('Method not implemented.');
+    update(id: string, serie: UpdateSerieDto): Observable<SerieEntity> {
+        return this._serieDao.update(id, serie).pipe(
+            catchError((e) =>
+              e.code === 11000
+                ? throwError(
+                    () =>
+                      new ConflictException(
+                        `Serie with title '${serie.title}' already exists`,
+                      ),
+                  )
+                : throwError(() => new UnprocessableEntityException(e.message)),
+            ),
+            mergeMap((serieUpdated) =>
+              !!serieUpdated
+                ? of(new SerieEntity(serieUpdated))
+                : throwError(
+                    () => new NotFoundException(`Serie with id '${id}' not found`),
+                  ),
+            ),
+          );
     }
 
-    delete(id: number): Observable<void> {
-        throw new Error('Method not implemented.');
+    delete(id: string): Observable<void> {
+        return this._serieDao.remove(id).pipe(
+            catchError((e) =>
+              throwError(() => new UnprocessableEntityException(e.message)),
+            ),
+            mergeMap((serieDeleted) =>
+              !!serieDeleted
+                ? of(undefined)
+                : throwError(
+                    () => new NotFoundException(`Serie with id '${id}' not found`),
+                  ),
+            ),
+          );
     }
+
+    private _prepareNewSerie = (
+        person: CreateSerieDto,
+      ): Observable<CreateSerieDto> =>
+        of({
+          ...person,
+        });
 }

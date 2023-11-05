@@ -4,6 +4,7 @@ import { SeriesService } from './series.service';
 import { Observable } from 'rxjs';
 import { SerieEntity } from './entities/serie.entity';
 import { CreateSerieDto } from './dtos/create-serie.dto';
+import { UpdateSerieDto } from './dtos/update-serie.dto';
 
 @ApiTags('series')
 @Controller('series')
@@ -25,8 +26,13 @@ export class SeriesController {
         return this._seriesService.create(createSerieDto)
     }
 
+    @Put(':id')
+    update(@Param('id') id: string, @Body() updateSerieDto: UpdateSerieDto): Observable<SerieEntity | void> {
+        return this._seriesService.update(id, updateSerieDto)
+    }
+
     @Delete(':id')
-    delete(@Param('id') id: number): Observable<void> {
+    delete(@Param('id') id: string): Observable<void> {
         return this._seriesService.delete(id)
     }
 }
