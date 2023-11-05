@@ -1,22 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { ApiTags } from "@nestjs/swagger";
 import { SeriesService } from './series.service';
 import { Observable } from 'rxjs';
 import { SerieEntity } from './entities/serie.entity';
 import { CreateSerieDto } from './dtos/create-serie.dto';
-import { ApiOkResponse, ApiNoContentResponse, ApiTags } from "@nestjs/swagger";
-import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('series')
 @Controller('series')
 export class SeriesController {
     constructor(private readonly _seriesService: SeriesService) {}
 
-    @ApiOkResponse({
-        description: 'Returns an array of series',
-        type: SerieEntity,
-        isArray: true,
-    })
-    @ApiNoContentResponse({ description: 'No serie exists in database' })
     @Get()
     findAll(): Observable<SerieEntity[] | void> {
         return this._seriesService.findAll()

@@ -10,9 +10,4 @@ export class CreateSerieDto {
     @IsNotEmpty()
     @Length(0, 256)
     description: string
-
-    @IsString()
-    @IsNotEmpty()
-    @Length(0, 256)
-    cover: string
 }
