@@ -28,4 +28,8 @@ export class SerieDao {
     remove(id: string): Observable<Serie | void> {
        return from(this._serieModel.findByIdAndRemove(id));
     }
+
+    updateCover(id: string, filePath: string): Observable<Serie | void> {
+        return from(this._serieModel.findByIdAndUpdate(id, { cover: filePath }, { new: true, runValidators: true, }));
+    }
 }

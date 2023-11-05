@@ -36,6 +36,14 @@ export class Serie {
         trim: true,
     })
     description: string
+
+    @Prop({
+        type: String,
+        required: true,
+        minlength: 0,
+        trim: true,
+    })
+    cover: string
 }
 
 export const SerieSchema = SchemaFactory.createForClass(Serie)

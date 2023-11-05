@@ -1,10 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, FileTypeValidator, Get, Param, ParseFilePipe, Post, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { ApiNoContentResponse, ApiOkResponse, ApiTags, ApiBody, ApiConflictResponse, ApiCreatedResponse, ApiBadRequestResponse, ApiParam, ApiNotFoundResponse } from "@nestjs/swagger";
 import { SeriesService } from './series.service';
 import { Observable } from 'rxjs';
 import { SerieEntity } from './entities/serie.entity';
 import { CreateSerieDto } from './dtos/create-serie.dto';
 import { UpdateSerieDto } from './dtos/update-serie.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @ApiTags('series')
 @Controller('series')
@@ -95,5 +97,23 @@ export class SeriesController {
     @Delete(':id')
     delete(@Param('id') id: string): Observable<void> {
         return this._seriesService.delete(id)
+    }
+
+    @Post(':id/cover')
+    @UseInterceptors(FileInterceptor('file', {
+        storage: diskStorage({
+            destination: "./uploads/",
+            filename: (_req, file, cb) => {
+                cb(null, file.originalname)}
+        })
+    }))
+    setCover(@Param('id') id: string, @UploadedFile(
+        new ParseFilePipe({
+            validators: [
+                new FileTypeValidator({ fileType: ".(png|jpg|jpeg)" })
+            ]
+        })
+    ) file: Express.Multer.File): Observable<SerieEntity | void> {
+        return this._seriesService.setCover(id, file.filename)
     }
 }

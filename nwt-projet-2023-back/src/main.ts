@@ -4,9 +4,11 @@ import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as Config from 'config'
 import { SeriesModule } from './series/series.module';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalPipes(new ValidationPipe());
 
   // create swagger options
@@ -24,6 +26,9 @@ async function bootstrap() {
 
   // setup swagger module
   SwaggerModule.setup(Config.get<string>("swagger.path"), app, peopleDocument);
+
+  app.useStaticAssets(join(__dirname, "..", "uploads"), { prefix: "/static/" })
+  // app.useStaticAssets(join(__dirname, "..", "uploads"))
 
   await app.listen(3000);
 }

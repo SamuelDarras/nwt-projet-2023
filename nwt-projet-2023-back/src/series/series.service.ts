@@ -90,10 +90,25 @@ export class SeriesService {
           );
     }
 
+    setCover(id: string, filePath: string): Observable<SerieEntity | void> {
+        return this._serieDao.updateCover(id, filePath).pipe(
+            catchError((e) => throwError(() => new UnprocessableEntityException(e.message)),
+            ),
+            mergeMap((serieUpdated) =>
+              !!serieUpdated
+                ? of(new SerieEntity(serieUpdated))
+                : throwError(
+                    () => new NotFoundException(`Serie with id '${id}' not found`),
+                  ),
+            ),
+          );
+
+    }
+
     private _prepareNewSerie = (
-        person: CreateSerieDto,
+        serie: CreateSerieDto,
       ): Observable<CreateSerieDto> =>
         of({
-          ...person,
+          ...serie,
         });
 }
