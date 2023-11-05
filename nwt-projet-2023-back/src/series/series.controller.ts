@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { ApiTags } from "@nestjs/swagger";
+import { ApiNoContentResponse, ApiOkResponse, ApiTags, ApiBody, ApiConflictResponse, ApiCreatedResponse, ApiBadRequestResponse, ApiParam, ApiNotFoundResponse } from "@nestjs/swagger";
 import { SeriesService } from './series.service';
 import { Observable } from 'rxjs';
 import { SerieEntity } from './entities/serie.entity';
@@ -11,26 +11,87 @@ import { UpdateSerieDto } from './dtos/update-serie.dto';
 export class SeriesController {
     constructor(private readonly _seriesService: SeriesService) {}
 
+    @ApiOkResponse({
+        description: "Returns an array of series",
+        type: SerieEntity,
+        isArray: true
+    })
+    @ApiNoContentResponse({
+        description: "No series exist in database"
+    })
     @Get()
     findAll(): Observable<SerieEntity[] | void> {
         return this._seriesService.findAll()
     }
 
+    @ApiOkResponse({
+        description: "Returns the serie with the given 'id'",
+        type: SerieEntity,
+    })
+    @ApiNoContentResponse({
+        description: "The serie with the given 'id' does'n exist in database"
+    })
     @Get(':id')
     findOne(@Param('id') id: string): Observable<SerieEntity | void> {
         return this._seriesService.findOne(id)
     }
 
+    @ApiCreatedResponse({
+        description: 'The serie has been successfully created',
+        type: SerieEntity,
+    })
+    @ApiConflictResponse({
+        description: 'The serie already exists in the database',
+    })
+    @ApiBadRequestResponse({ description: 'Payload provided is not good' })
+    @ApiBody({
+        description: 'Payload to create a new serie',
+        type: CreateSerieDto,
+    })
     @Post()
     create(@Body() createSerieDto: CreateSerieDto): Observable<SerieEntity | void> {
         return this._seriesService.create(createSerieDto)
     }
 
+    @ApiOkResponse({
+        description: 'The serie has been successfully updated',
+        type: SerieEntity,
+    })
+    @ApiNotFoundResponse({
+        description: 'The serie with the given "id" doesn\'t exist in the database'
+    })
+    @ApiConflictResponse({
+        description: 'The serie already exists in the database',
+    })
+    @ApiBadRequestResponse({ description: 'Payload provided is not good' })
+    @ApiBody({
+        description: 'Payload to create a new serie',
+        type: CreateSerieDto,
+    })
+    @ApiParam({
+        name: 'id',
+        description: 'Unique identifier of the serie in the database',
+        type: String,
+        allowEmptyValue: false,
+    })
     @Put(':id')
     update(@Param('id') id: string, @Body() updateSerieDto: UpdateSerieDto): Observable<SerieEntity | void> {
         return this._seriesService.update(id, updateSerieDto)
     }
 
+    @ApiNoContentResponse({
+        description: 'The serie has been successfully deleted',
+    })
+    @ApiNotFoundResponse({
+        description: 'The serie with the given "id" doesn\'t exist in the database'
+    })
+    @ApiBadRequestResponse({ description: 'Payload provided is not good' })
+    @ApiParam({
+        name: 'id',
+        description: 'Unique identifier of the serie in the database',
+        type: String,
+        allowEmptyValue: false,
+    })
     @Delete(':id')
     delete(@Param('id') id: string): Observable<void> {
         return this._seriesService.delete(id)
