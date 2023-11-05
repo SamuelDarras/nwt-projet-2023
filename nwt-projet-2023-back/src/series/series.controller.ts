@@ -16,7 +16,7 @@ export class SeriesController {
     }
 
     @Get(':id')
-    findOne(@Param('id') id: number): Observable<SerieEntity | void> {
+    findOne(@Param('id') id: string): Observable<SerieEntity | void> {
         return this._seriesService.findOne(id)
     }
 
