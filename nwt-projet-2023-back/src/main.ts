@@ -28,6 +28,7 @@ async function bootstrap() {
   SwaggerModule.setup(Config.get<string>("swagger.path"), app, peopleDocument);
 
   app.useStaticAssets(join(__dirname, "..", "uploads"), { prefix: "/static/" })
+  app.enableCors()
   // app.useStaticAssets(join(__dirname, "..", "uploads"))
 
   await app.listen(3000);
