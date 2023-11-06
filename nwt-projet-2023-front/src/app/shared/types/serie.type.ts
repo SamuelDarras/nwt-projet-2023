@@ -3,4 +3,6 @@ export type Serie = {
   title: string,
   description: string,
   cover?: string,
+  releaseDate: number,
+  seasonsCount: number,
 }

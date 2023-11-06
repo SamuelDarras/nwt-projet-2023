@@ -4,7 +4,13 @@
       <mat-card-title>
         {{serie.title}}
       </mat-card-title>
-        <img mat-card-image src="http://localhost:3000/static/{{serie.cover}}">
+      <mat-card-subtitle>
+        {{serie.releaseDate | date}}
+      </mat-card-subtitle>
+      <mat-card-subtitle>
+        Cette serie comporte : {{serie.seasonsCount}} saison{{ serie.seasonsCount > 1 ? 's' : '' }}
+      </mat-card-subtitle>
+      <img mat-card-image src="http://localhost:3000/static/{{serie.cover || 'empty.jpg'}}">
     </mat-card-title-group>
   </mat-card-header>
   <mat-card-content>
