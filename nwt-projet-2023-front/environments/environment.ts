@@ -6,6 +6,10 @@ export default {
     endpoints: {
       allSeries: "series",
       oneSerie: "series/:id",
+      create: "series",
+      update: "series/:id",
+      delete: "series/:id",
+      cover: "series/:id/cover",
     }
   }
 }
