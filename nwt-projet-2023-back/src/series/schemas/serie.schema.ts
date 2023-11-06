@@ -39,11 +39,22 @@ export class Serie {
 
     @Prop({
         type: String,
-        required: true,
         minlength: 0,
         trim: true,
     })
     cover: string
+
+    @Prop({
+        type: Date,
+        required: true,
+    })
+    releaseDate: Date
+
+    @Prop({
+        type: Number,
+        required: true,
+    })
+    seasonsCount: number
 }
 
 export const SerieSchema = SchemaFactory.createForClass(Serie)

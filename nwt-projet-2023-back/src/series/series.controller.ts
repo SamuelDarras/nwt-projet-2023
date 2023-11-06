@@ -1,5 +1,23 @@
-import { Body, Controller, Delete, FileTypeValidator, Get, Param, ParseFilePipe, Post, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
-import { ApiNoContentResponse, ApiOkResponse, ApiTags, ApiBody, ApiConflictResponse, ApiCreatedResponse, ApiBadRequestResponse, ApiParam, ApiNotFoundResponse } from "@nestjs/swagger";
+import { Body,
+	 Controller,
+	 Delete,
+	 FileTypeValidator,
+	 Get,
+	 Param,
+	 ParseFilePipe,
+	 Post,
+	 Put,
+	 UploadedFile,
+	 UseInterceptors } from '@nestjs/common';
+import { ApiNoContentResponse,
+	 ApiOkResponse,
+	 ApiTags,
+	 ApiBody,
+	 ApiConflictResponse,
+	 ApiCreatedResponse,
+	 ApiBadRequestResponse,
+	 ApiParam,
+	 ApiNotFoundResponse } from "@nestjs/swagger";
 import { SeriesService } from './series.service';
 import { Observable } from 'rxjs';
 import { SerieEntity } from './entities/serie.entity';
@@ -99,6 +117,19 @@ export class SeriesController {
         return this._seriesService.delete(id)
     }
 
+    @ApiOkResponse({
+        description: 'The serie\'s cover has been successfully updated',
+        type: SerieEntity,
+    })
+    @ApiNotFoundResponse({
+        description: 'The serie with the given "id" doesn\'t exist in the database'
+    })
+    @ApiParam({
+        name: 'id',
+        description: 'Unique identifier of the serie in the database',
+        type: String,
+        allowEmptyValue: false,
+    })
     @Post(':id/cover')
     @UseInterceptors(FileInterceptor('file', {
         storage: diskStorage({

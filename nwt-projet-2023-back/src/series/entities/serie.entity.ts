@@ -35,10 +35,28 @@ export class SerieEntity {
     @Expose()
     cover: string
 
+    @ApiProperty({
+        name: "releaseDate",
+        description: "The date of the release of the serie"
+    })
+    @Type(() => Date)
+    @Expose()
+    releaseDate: Date
+
+    @ApiProperty({
+        name: "seasonsCount",
+        description: "The date of the release of the serie"
+    })
+    @Type(() => Date)
+    @Expose()
+    seasonsCount: number
+
     constructor(partial: Partial<SerieEntity>) {
         this.id = partial.id
         this.title = partial.title
         this.description = partial.description
         this.cover = partial.cover
+        this.releaseDate = partial.releaseDate
+        this.seasonsCount = partial.seasonsCount
     }
 }
