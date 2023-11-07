@@ -1,4 +1,4 @@
-<mat-card class="mat-whiteframe-2dp">
+<mat-card (click)="navigate(serie.id)" class="mat-whiteframe-2dp">
     <div>
         <img mat-card-md-image src="http://localhost:3000/static/{{serie.cover || 'empty.jpg'}}"/>
     </div>

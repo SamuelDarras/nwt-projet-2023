@@ -4,6 +4,8 @@ import { Observable, defaultIfEmpty, filter, map, mergeMap } from 'rxjs';
 import { DialogComponent } from '../shared/dialog/dialog.component';
 import { SerieService } from '../shared/services/serie.service';
 import { Serie } from '../shared/types/serie.type';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'home',
@@ -23,7 +25,7 @@ export class HomeComponent implements OnInit {
    */
   constructor(
     private _seriesService: SerieService,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
   ) {
     this._series = [];
     this._dialogStatus = 'inactive';
@@ -105,4 +107,5 @@ export class HomeComponent implements OnInit {
   private _add(serie: Serie | undefined): Observable<Serie> {
     return this._seriesService.create(serie as Serie);
   }
+
 }
