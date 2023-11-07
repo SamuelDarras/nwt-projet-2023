@@ -55,6 +55,12 @@ export class Serie {
         required: true,
     })
     seasonsCount: number
+
+    @Prop({
+        type: Boolean,
+        required: true
+    })
+    seen: boolean
 }
 
 export const SerieSchema = SchemaFactory.createForClass(Serie)

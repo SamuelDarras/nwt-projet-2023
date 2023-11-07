@@ -10,6 +10,7 @@ export default {
       update: "series/:id",
       delete: "series/:id",
       cover: "series/:id/cover",
+      seen: "series/:id/seen",
     }
   }
 }

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Serie } from '../types/serie.type';
 import { Router } from '@angular/router';
+import { SerieService } from '../services/serie.service';
 
 @Component({
   selector: 'nwt-homecard',
@@ -15,6 +16,7 @@ export class HomeCardComponent implements OnInit {
    */
   constructor(
     private _router: Router,
+    private _seriesService: SerieService
   ) {
     this._serie = {} as Serie;
   }
@@ -34,6 +36,10 @@ export class HomeCardComponent implements OnInit {
     this._serie = serie;
   }
 
+  seen(id: string | undefined, v: boolean) {
+    this._serie.seen = !v
+    this._seriesService.seen(id, v)
+  }
 
   /**
    * OnInit implementation

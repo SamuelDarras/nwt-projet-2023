@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import environment from "../../../../environments/environment"
-import { Observable, defaultIfEmpty, filter, map } from 'rxjs';
+import { Observable, defaultIfEmpty, filter, map, of } from 'rxjs';
 import { Serie } from '../types/serie.type';
 
 @Injectable({
@@ -56,6 +56,16 @@ export class SerieService {
       this._backendUrl + environment.backend.endpoints.cover.replace(":id", id),
       this._options()
     )
+  }
+
+  seen(id: string | undefined, v: boolean): Observable<any> {
+    let _id = id || ""
+    let _v = !v
+    return of(this._http.put<Serie>(
+      this._backendUrl + environment.backend.endpoints.seen.replace(":id", _id),
+      { seen: _v },
+      this._options()
+    ).subscribe())
   }
 
   private _options(headerList: object = {}): any {

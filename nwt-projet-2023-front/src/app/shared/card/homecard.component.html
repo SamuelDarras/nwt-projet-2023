@@ -1,4 +1,4 @@
-<mat-card (click)="navigate(serie.id)" class="mat-whiteframe-2dp">
+<mat-card class="mat-whiteframe-2dp">
     <div>
         <img mat-card-md-image src="http://localhost:3000/static/{{serie.cover || 'empty.jpg'}}"/>
     </div>
@@ -6,7 +6,11 @@
         <mat-card-title-group>
             <mat-card-title>
                 <a href="javascript:void(0);">
-                <span>{{ serie?.title }}</span>
+                  <span (click)="navigate(serie.id)">{{ serie?.title }}</span>
+                  <button (click)="seen(serie.id, serie.seen)" mat-icon-button>
+                    <mat-icon *ngIf="serie.seen">visibility</mat-icon>
+                    <mat-icon *ngIf="!serie.seen">visibility_off</mat-icon>
+                  </button>
                 </a>
             </mat-card-title>
             <mat-card-subtitle>{{ serie?.seasonsCount }} saisons</mat-card-subtitle>

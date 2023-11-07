@@ -51,6 +51,14 @@ export class SerieEntity {
     @Expose()
     seasonsCount: number
 
+    @ApiProperty({
+        name: "seen",
+        description: "Wether the has been seen or not"
+    })
+    @Type(() => Boolean)
+    @Expose()
+    seen: boolean
+
     constructor(partial: Partial<SerieEntity>) {
         this.id = partial.id
         this.title = partial.title
@@ -58,5 +66,6 @@ export class SerieEntity {
         this.cover = partial.cover
         this.releaseDate = partial.releaseDate
         this.seasonsCount = partial.seasonsCount
+        this.seen = partial.seen
     }
 }

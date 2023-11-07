@@ -5,4 +5,5 @@ export type Serie = {
   cover?: string,
   releaseDate: number,
   seasonsCount: number,
+  seen: boolean
 }

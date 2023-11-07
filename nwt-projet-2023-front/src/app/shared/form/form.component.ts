@@ -95,6 +95,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output,} from '@angu
           description: '',
           releaseDate: 0,
           seasonsCount: 0,
+          seen: false,
         };
         this._isUpdateMode = false;
       }

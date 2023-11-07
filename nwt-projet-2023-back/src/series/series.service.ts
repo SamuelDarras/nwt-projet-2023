@@ -105,6 +105,21 @@ export class SeriesService {
 
     }
 
+    seen(id: string, seen: boolean): Observable<SerieEntity> {
+        return this._serieDao.seen(id, seen).pipe(
+            catchError((e) => throwError(() => new UnprocessableEntityException(e.message)),
+            ),
+            mergeMap((serieUpdated) =>
+              !!serieUpdated
+                ? of(new SerieEntity(serieUpdated))
+                : throwError(
+                    () => new NotFoundException(`Serie with id '${id}' not found`),
+                  ),
+            ),
+          );
+
+    }
+
     private _prepareNewSerie = (
         serie: CreateSerieDto,
       ): Observable<CreateSerieDto> =>

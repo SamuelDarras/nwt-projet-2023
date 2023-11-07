@@ -32,4 +32,8 @@ export class SerieDao {
     updateCover(id: string, filePath: string): Observable<Serie | void> {
         return from(this._serieModel.findByIdAndUpdate(id, { cover: filePath }, { new: true, runValidators: true, }));
     }
+
+    seen(id: string, seen: boolean) {
+        return from(this._serieModel.findByIdAndUpdate(id, { seen: seen }, { new: true, runValidators: true, }));
+    }
 }

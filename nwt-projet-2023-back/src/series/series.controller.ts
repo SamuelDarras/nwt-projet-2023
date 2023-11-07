@@ -25,6 +25,7 @@ import { CreateSerieDto } from './dtos/create-serie.dto';
 import { UpdateSerieDto } from './dtos/update-serie.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { SeenSerieDto } from './dtos/seen-serie.dto';
 
 @ApiTags('series')
 @Controller('series')
@@ -97,6 +98,32 @@ export class SeriesController {
     @Put(':id')
     update(@Param('id') id: string, @Body() updateSerieDto: UpdateSerieDto): Observable<SerieEntity | void> {
         return this._seriesService.update(id, updateSerieDto)
+    }
+
+    @ApiOkResponse({
+        description: 'The serie has been successfully updated',
+        type: SerieEntity,
+    })
+    @ApiNotFoundResponse({
+        description: 'The serie with the given "id" doesn\'t exist in the database'
+    })
+    @ApiConflictResponse({
+        description: 'The serie already exists in the database',
+    })
+    @ApiBadRequestResponse({ description: 'Payload provided is not good' })
+    @ApiBody({
+        description: 'Payload to create a new serie',
+        type: SeenSerieDto,
+    })
+    @ApiParam({
+        name: 'id',
+        description: 'Unique identifier of the serie in the database',
+        type: String,
+        allowEmptyValue: false,
+    })
+    @Put(':id/seen')
+    seen(@Param('id') id: string, @Body() seenSerieDto: SeenSerieDto): Observable<SerieEntity | void> {
+        return this._seriesService.seen(id, seenSerieDto.seen)
     }
 
     @ApiNoContentResponse({
