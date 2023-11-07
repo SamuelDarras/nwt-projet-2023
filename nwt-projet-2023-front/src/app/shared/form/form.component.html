@@ -1,0 +1,74 @@
+<h2 mat-dialog-title *ngIf="isUpdateMode">Update {{ form.get('title')?.value }}</h2>
+<h2 mat-dialog-title *ngIf="!isUpdateMode">Create new serie</h2>
+
+<mat-dialog-content>
+  <form novalidate [formGroup]="form">
+
+    <p *ngIf="isUpdateMode">
+      <span style="width:100%">ID (disabled)</span><br/>
+      <span style="width:100%">{{model.id}}</span>
+    </p>
+
+    <table class="full-width" cellspacing="0">
+      <tr>
+        <td>
+          <mat-form-field class="full-width" [class.mgb15]="form.get('title')?.dirty && form.get('title')?.invalid">
+            <input matInput placeholder="Title" formControlName="title" minlength="2" required name="title" />
+            <mat-error *ngIf="form.get('title')?.dirty && form.get('title')?.hasError('required')">
+              Title is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="form.get('title')?.dirty && form.get('title')?.hasError('minlength')">
+              Title is <strong>2 chars min</strong>
+            </mat-error>
+          </mat-form-field>
+        </td>
+        <td class="align-right">
+          <!-- not required by API, so we put static content which is not editable and not sent to the API -->
+          <img width="112" [src]="form.get('cover')?.value"/>
+        </td>
+      </tr>
+    </table>
+
+    <p>
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Description" formControlName="description" required name="description" />
+        <mat-error *ngIf="form.get('description')?.dirty && form.get('description')?.hasError('required')">
+          Description is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="form.get('description')?.dirty && form.get('description')?.hasError('minlength')">
+            Description is <strong>5 chars min</strong>
+          </mat-error>
+      </mat-form-field>
+    </p>
+
+    <p>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="ReleaseDate" formControlName="releaseDate" required name="releaseDate" />
+          <mat-error *ngIf="form.get('releaseDate')?.dirty && form.get('releaseDate')?.hasError('required')">
+            Description is <strong>required</strong>
+          </mat-error>
+          <!--TO DO ERREUR PATTERN-->
+        </mat-form-field>
+    </p>
+
+    <p>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="SeasonsCount" formControlName="seasonsCount" required name="seasonsCount" />
+          <mat-error *ngIf="form.get('seasonsCount')?.dirty && form.get('seasonsCount')?.hasError('required')">
+            Description is <strong>required</strong>
+          </mat-error>
+          <!--TO DO ERREUR PATTERN-->
+        </mat-form-field>
+    </p>
+
+
+    <!-- required by API, so we put static content which is not editable but sent to the API -->
+    <input type="hidden" formControlName="entity" name="entity">
+  </form>
+</mat-dialog-content>
+
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="cancel()">Cancel</button>
+  <button mat-button color="primary" type="submit" (click)="submit(form.value)" [disabled]="form.invalid">Save</button>
+</mat-dialog-actions>

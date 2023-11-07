@@ -1,0 +1,15 @@
+<mat-card class="mat-whiteframe-2dp">
+    <div>
+        <img mat-card-md-image src="http://localhost:4200/static/{{serie.cover || 'empty.jpg'}}"/>
+    </div>
+    <div>
+        <mat-card-title-group>
+            <mat-card-title>
+                <a href="javascript:void(0);">
+                <span>{{ serie?.title }}</span>
+                </a>
+            </mat-card-title>
+            <mat-card-subtitle>{{ serie?.releaseDate }}</mat-card-subtitle>
+        </mat-card-title-group>
+        <mat-card-content> {{serie.description}} </mat-card-content>
+    </div>
