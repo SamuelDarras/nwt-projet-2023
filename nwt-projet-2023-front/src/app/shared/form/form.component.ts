@@ -134,14 +134,14 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output,} from '@angu
           '',
           Validators.compose([Validators.required])
         ),
-        realeaseDate: new FormControl(
+        releaseDate: new FormControl(
           '',
           Validators.compose([
             Validators.required,
             //Validators.pattern('(0|\\+33)\\d{9}'), TODO
           ])
         ),
-        seasonCount: new FormControl(
+        seasonsCount: new FormControl(
             '',
             Validators.compose([
               Validators.required,
