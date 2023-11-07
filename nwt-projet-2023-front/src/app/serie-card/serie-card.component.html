@@ -7,10 +7,10 @@
         {{serie.title}}
       </mat-card-title>
       <mat-card-subtitle>
-        {{serie.releaseDate | date}}
+        <strong>Date de sortie :</strong> {{serie.releaseDate | date: 'dd/MM/yyyy'}}
       </mat-card-subtitle>
       <mat-card-subtitle>
-        Cette serie comporte : {{serie.seasonsCount || 'NaN'}} saison{{ serie.seasonsCount > 1 ? 's' : '' }}
+        <strong>Cette serie comporte :</strong> {{serie.seasonsCount || 'NaN'}} saison{{ serie.seasonsCount > 1 ? 's' : '' }}
       </mat-card-subtitle>
       <img mat-card-image src="http://localhost:3000/static/{{serie.cover || 'empty.jpg'}}">
     </mat-card-title-group>

@@ -31,7 +31,7 @@
 
     <p>
       <mat-form-field class="full-width">
-        <input matInput placeholder="Description" formControlName="description" required name="description" />
+        <textarea matInput placeholder="Description" formControlName="description" required name="description"></textarea>
         <mat-error *ngIf="form.get('description')?.dirty && form.get('description')?.hasError('required')">
           Description is <strong>required</strong>
         </mat-error>
@@ -43,7 +43,7 @@
 
     <p>
         <mat-form-field class="full-width">
-          <input matInput placeholder="ReleaseDate" formControlName="releaseDate" required name="releaseDate" />
+          <input matInput type="date" placeholder="dd/MM/yyyy" formControlName="releaseDate" required name="releaseDate" />
           <mat-error *ngIf="form.get('releaseDate')?.dirty && form.get('releaseDate')?.hasError('required')">
             Release Date is <strong>required</strong>
           </mat-error>
