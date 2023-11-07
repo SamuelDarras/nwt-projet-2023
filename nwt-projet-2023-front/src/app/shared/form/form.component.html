@@ -24,7 +24,7 @@
         </td>
         <td class="align-right">
           <!-- not required by API, so we put static content which is not editable and not sent to the API -->
-          <img width="112" [src]="form.get('cover')?.value"/>
+          <img width="112" [src]="'http://localhost:3000/static/' + form.get('cover')?.value"/>
         </td>
       </tr>
     </table>

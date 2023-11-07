@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output,} from '@angu
   import { Serie } from '../types/serie.type';
   import { FormControl, FormGroup, Validators } from '@angular/forms';
   //import { CustomValidators } from './custom-validators';
-  
+
   @Component({
     selector: 'nwt-form',
     templateUrl: './form.component.html',
@@ -19,7 +19,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output,} from '@angu
     private readonly _submit$: EventEmitter<Serie>;
     // private property to store form value
     private readonly _form: FormGroup;
-  
+
     /**
      * Component constructor
      */
@@ -30,7 +30,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output,} from '@angu
       this._cancel$ = new EventEmitter<void>();
       this._form = this._buildForm();
     }
-  
+
     /**
      * Sets private property _model
      */
@@ -38,28 +38,28 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output,} from '@angu
     set model(model: Serie) {
       this._model = model;
     }
-  
+
     /**
      * Returns private property _model
      */
     get model(): Serie {
       return this._model;
     }
-  
+
     /**
      * Returns private property _form
      */
     get form(): FormGroup {
       return this._form;
     }
-  
+
     /**
      * Returns private property _isUpdateMode
      */
     get isUpdateMode(): boolean {
       return this._isUpdateMode;
     }
-  
+
     /**
      * Returns private property _cancel$
      */
@@ -67,7 +67,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output,} from '@angu
     get cancel$(): EventEmitter<void> {
       return this._cancel$;
     }
-  
+
     /**
      * Returns private property _submit$
      */
@@ -75,12 +75,12 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output,} from '@angu
     get submit$(): EventEmitter<Serie> {
       return this._submit$;
     }
-  
+
     /**
      * OnInit implementation
      */
     ngOnInit(): void {}
-  
+
     /**
      * Function to handle component update
      */
@@ -90,7 +90,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output,} from '@angu
         this._isUpdateMode = true;
       } else {
         this._model = {
-          cover: 'http://localhost:3000/static/{{serie.cover' || 'empty.jpg',
+          cover: 'empty.jpg',
           title: '',
           description: '',
           releaseDate: 0,
@@ -98,26 +98,26 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output,} from '@angu
         };
         this._isUpdateMode = false;
       }
-  
+
       // update form's values with model
       this._form.patchValue(this._model);
     }
-  
+
     /**
      * Function to emit event to cancel process
      */
     cancel(): void {
       this._cancel$.emit();
     }
-  
+
     /**
      * Function to emit event to submit form and serie
      */
     submit(serie: Serie): void {
       this._submit$.emit(serie);
     }
-  
-  
+
+
     /**
      * Function to build our form
      */

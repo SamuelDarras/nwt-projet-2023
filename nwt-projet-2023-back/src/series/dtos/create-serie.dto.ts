@@ -20,7 +20,7 @@ export class CreateSerieDto {
     })
     @IsString()
     @IsNotEmpty()
-    @Length(0, 256)
+    @Length(0, 1024)
     description: string
 
     @ApiProperty({

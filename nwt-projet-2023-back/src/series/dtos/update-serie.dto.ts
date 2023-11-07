@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger"
 import { Type } from "class-transformer"
-import { IsNotEmpty, IsNumberString, IsString, Length } from "class-validator"
+import { IsNotEmpty, IsNumber, IsNumberString, IsString, Length } from "class-validator"
 
 export class UpdateSerieDto {
     @ApiProperty({
@@ -20,7 +20,7 @@ export class UpdateSerieDto {
     })
     @IsString()
     @IsNotEmpty()
-    @Length(0, 256)
+    @Length(0, 1024)
     description: string
 
     @ApiProperty({
@@ -34,7 +34,7 @@ export class UpdateSerieDto {
         name: 'seasonsCount',
         description: 'The number of seasons in this serie'
     })
-    @IsNumberString()
+    @IsNumber()
     @Type(() => Number)
     seasonsCount: number
 }

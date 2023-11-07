@@ -44,6 +44,7 @@ export class SerieService {
   }
 
   delete(id: string): Observable<string> {
+    console.log(id)
     return this._http.delete(
       this._backendUrl + environment.backend.endpoints.delete.replace(":id", id),
       this._options()

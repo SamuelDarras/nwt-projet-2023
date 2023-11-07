@@ -26,7 +26,7 @@ export class SerieDao {
     }
 
     remove(id: string): Observable<Serie | void> {
-       return from(this._serieModel.findByIdAndRemove(id));
+       return from(this._serieModel.findByIdAndDelete(id));
     }
 
     updateCover(id: string, filePath: string): Observable<Serie | void> {
